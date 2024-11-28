@@ -95,9 +95,8 @@ class Launcher:
         """初始化调度器"""
         for reader, publishers in self._flows.items():
             for cron_expr, publisher in publishers:
-                self._scheduler.add_task(lambda r, p: p.publish(*r.read(need_title=True)),
-                                         CronTrigger.from_crontab(cron_expr),
-                                         args=[reader, publisher])
+                self._scheduler.add_task(lambda r, p: p.publish(**r.read(need_title=True)),
+                                         CronTrigger.from_crontab(cron_expr), args=[reader, publisher])
                 self._logger.info(f"Scheduler add {publisher.name} started")
 
     def init_httpserver(self):

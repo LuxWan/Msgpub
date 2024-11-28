@@ -36,10 +36,13 @@ class EnzeReader(BaseReader):
         app.settings[self.name] = self
         self._url = "{}/upload".format(app.settings.get("m_url", ""))
 
-    def read(self, need_title: bool = False, **kwargs) -> Tuple:
+    def read(self, need_title: bool = False, **kwargs) -> Dict[str, str]:
         if need_title:
-            return self.get_content(), self.get_title()
-        return (self.get_content(),)
+            return {
+                "content": self.get_content(),
+                "title": self.get_title(),
+            }
+        return {"content": self.get_content()}
 
     def get_title(self):
         """获取标题"""
@@ -66,7 +69,7 @@ class EnzeReader(BaseReader):
         tomorrow_schedule = self._cur_schedule.get(tomorrow) or self._next_schedule.get(tomorrow) or "未知"
         template = ENZE_TEMPLATE.format(today_schedule, tomorrow_schedule)
         # 提前两天提醒上传下周排班
-        if not self._cur_schedule.get(after_tomorrow) and not self._next_schedule:
+        if not self._cur_schedule.get(after_tomorrow) and not self._next_schedule.get(after_tomorrow):
             template += "，" + ENZE_UPDATE_TEMPLATE.format(self._url)
 
         return template

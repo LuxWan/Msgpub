@@ -1,6 +1,6 @@
 import logging
 from abc import ABC
-from typing import Type, Tuple
+from typing import Type, Dict, Any
 
 from core.exception import NotFoundError
 
@@ -13,7 +13,7 @@ class BaseReader(ABC):
         super().__init_subclass__(**kwargs)
         cls.name = cls.__name__.removesuffix("Reader").lower()
 
-    def read(self, *args, **kwargs) -> Tuple:
+    def read(self, *args, **kwargs) -> Dict[str, Any]:
         raise NotImplementedError
 
     @classmethod
