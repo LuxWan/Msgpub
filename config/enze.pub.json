@@ -1,0 +1,15 @@
+{
+  "name": "enze",
+  "sheet": "Sheet1",
+  "title_key": "",
+  "content_key": "",
+  "date_format": "",
+  "publishers": {
+    "pushplus": {
+      "url": "",
+      "token": "",
+      "topic": 0,
+      "cron_expr": "* * * * *"
+    }
+  }
+}
