@@ -104,7 +104,11 @@ class Launcher:
         port, addr = self._config.getint("server", "port"), self._config.get("server", "address")
         app = Application(router, **{
             "template_path": TemplatesDir,
-            "m_url": "{}:{}".format(self._config.get("server", "domain"), port),
+            "m_url": "{}://{}:{}".format(
+                "https" if self._config.getboolean("server", "tls") else "http",
+                self._config.get("server", "domain"),
+                port
+            ),
         })
 
         self._server = HttpServer(app)
